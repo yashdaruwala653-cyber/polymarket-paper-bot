@@ -1,25 +1,27 @@
-# Polymarket V3 — Real-Data Paper Bot
+# Polymarket V4 — Adaptive Real-Data Paper Bot
 
-This version runs on a cloud host and reads Polymarket's public market-data APIs. It does not place orders.
+Paper trading only. Uses public Polymarket market data. No wallet, API key, or real orders.
 
-Polymarket documents that market data is public and requires no API key, authentication, or wallet.
+Features:
+- real active-market data from Gamma API
+- probability/price analysis using implied probability, recent momentum, liquidity and volume
+- confidence-ranked entries
+- risk-based paper position sizing with stake cap
+- configurable stop loss / take profit (default 1:2, 6% / 12%)
+- maximum simultaneous positions
+- maximum trades per hour and cooldown
+- rolling adaptive parameter learning from closed paper trades
+- SQLite trade log for the running session
+- live dashboard and /health endpoint
 
-The strategy included here is only a demonstration signal so we can validate the data pipeline and paper execution. It is not a claim of profitability.
+Default paper settings:
+- starting balance: $1,000
+- max positions: 8
+- max trades/hour: 12
+- risk budget: 1% of balance per trade
+- max stake: $50
+- stop loss: 6%
+- take profit: 12%
+- scan: every 15 seconds
 
-## Render
-- Build: `pip install -r requirements.txt`
-- Start: `uvicorn bot:app --host 0.0.0.0 --port $PORT`
-
-## Environment
-Optional:
-- STARTING_BALANCE=1000
-- STAKE_USD=10
-- MAX_POSITIONS=5
-- SCAN_SECONDS=20
-- MIN_LIQUIDITY=5000
-- MIN_PRICE=0.08
-- MAX_PRICE=0.92
-- TAKE_PROFIT=0.08
-- STOP_LOSS=0.06
-
-No secrets are required.
+Important: adaptive learning is an online rules-based optimizer, not a claim of guaranteed profitability. Render's free service has ephemeral local storage, so the SQLite history is not durable across service replacement/redeploys.
