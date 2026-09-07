@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: polymarket-v4-paper
+    name: polymarket-v3-paper
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt
